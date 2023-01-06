@@ -21,7 +21,7 @@ class Candidato(models.Model):
 
 
 class Programa(models.Model):
-    nomePrograma = models.CharField(max_length=50)
+    nomePrograma = models.CharField(max_length=50, default='some_value')
 
     def __str__(self):
         return self.nomePrograma
@@ -29,6 +29,7 @@ class Programa(models.Model):
 
 class ProgramaEmpresa(models.Model):
     # nomePrograma = models.CharField(max_length=50)
+    listaProgramaEmpresa = models.CharField(max_length=50, null=True)
     empresaProgramaEmpresa = models.ManyToManyField(Empresa)
 
     # nomeProgramaPrograma = models.OneToOneField(NomePrograma)
@@ -38,10 +39,21 @@ class ProgramaEmpresa(models.Model):
 
 
 class ProgramaCandidato(models.Model):
+    listaProgramaCandidato = models.CharField(max_length=50, null=True)
     candidatoProgramaCandidato = models.ManyToManyField(Candidato)
 
     def __str__(self):
         return [candidato_atual.nomePrograma for candidato_atual in self.candidatoProgramaCandidato.all()].__str__()
+
+
+class ProgramaFinal(models.Model):
+    dataInicio = models.DateTimeField()
+    programa = models.ForeignKey(Programa, on_delete=models.PROTECT, related_name='programa')
+    empresas = models.ForeignKey(ProgramaEmpresa, on_delete=models.PROTECT, related_name='empresas')
+    candidatos = models.ForeignKey(ProgramaCandidato, on_delete=models.PROTECT, related_name='candidatos')
+
+    def __str__(self):
+        return f'Programa: {self.programa} | Empresa(s): {self.empresas} | Candidato(s): {self.candidatos}'
 
 # class VerPrograma(models.Model):
 #     data= models.DateTimeField9()
