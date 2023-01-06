@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Empresa, Candidato, ProgramaEmpresa, Programa, ProgramaCandidato
+from .models import Empresa, Candidato, ProgramaEmpresa, Programa, ProgramaCandidato, ProgramaFinal
 
 
 # class ProgramasAdmin(admin.ModelAdmin):
@@ -14,5 +14,7 @@ admin.site.register(Candidato)
 admin.site.register(ProgramaEmpresa)
 admin.site.register(Programa)
 admin.site.register(ProgramaCandidato)
+admin.site.register(ProgramaFinal)
+
 
 # Register your models here.
